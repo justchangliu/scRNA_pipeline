@@ -1,3 +1,8 @@
+
+# Basic Pipeline Go Through
+# https://wutaoblog.com.cn/archives/seurat_pipeline
+# 
+
 #### ------------ Normalize method ------------ ####
 # LogNormalize calculation: log2((count/total_counts)*10000+1)
 # just a regular method to avoid the depth of the library to impact the variances from barcode to barcode
@@ -22,5 +27,7 @@
 # https://blog.csdn.net/Nh_code/article/details/125566701
 # regress out genes就是用把 vars.regress.genes用作base vectors来进行投影，剩下的变量进行intercept 
 # 
+
+
 
 
