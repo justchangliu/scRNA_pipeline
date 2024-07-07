@@ -29,7 +29,7 @@
 # 
 
 
-###    --------   Data Integration   ----------------       ####
+### --------   Data Integration   ------------------   ####
 # https://blog.csdn.net/weixin_60734652/article/details/133022518 
 # seurat data integration 算法解析
 # seurat data integration就是对所有的combined count matrix进行校正，得到一个新的matrix。
@@ -41,6 +41,7 @@
 # 
 
 ###  --------   Findneighbors/clustering/UMAP and tSNE plot ----------- ###
+
 # https://blog.csdn.net/weixin_53637133/article/details/138020905
 # Jaccard distance: 比较两个样品之间的相似度度来判断neighboring distance
 # https://www.jianshu.com/p/72313d70d9ab
@@ -54,7 +55,7 @@
 # Findneigbors 是产生距离列表，对每个cell 之间的距离根据gene值进行计算。
 # PCA只是用来降维，降低Findneighbors的算法的complexity.
 
-### -------------------       ARACNe algorithm ---------------------       ###
+### -------------------  ARACNe algorithm ---------------------   ###
 # Use ARACNe 来create a net。
 # ARACNe算法的核心是什么：把给定的gene matrix，通过randomly permute这个gene matrix，
 # 来算一个MI，然后通过估算MI threshold来剔除不好的tf相连接的target。
@@ -80,6 +81,7 @@
 # doi: 10.1093/bioinformatics/btw216 this work is about
 
 ###  -------------------  VIPER Algorithm ------------------------ ###
+
 # Finally, we describe the use of VIPER to evaluate all non-silent
 # somatic mutations in TCGA samples and report the aberrant activity
 # of all oncogenes listed in the Catalogue Of Somatic Mutations In
@@ -105,10 +107,30 @@
 # (see below).
 # 
 
-# 
-
-
-
+### -------------------- The VIPER algorithm -------------------- ###
+# https://bioconductor.org/packages/release/bioc/vignettes/viper/inst/doc/viper.pdf
+# GES: Gene Expression Signature
+# signature <- rowTtest(dset, "description", c("CB", "CC"), "N")
+# First, input gene expressiond ata, and in VIPER package, a function will efficiently performs Student's t-test for each row of
+# a dataset. 
+# > nullmodel <- ttestNull(dset, "description", c("CB", "CC"), "N", per = 1000,
+# + repos = TRUE, verbose = FALSE)
+# and then get a nullmodel by permutating the sample randomly. 
+# A regulon object from the ARACNe network
+# 我就这么理解吧，这个msVIPER
+# regulons include the list of transcriptors and the up/down regulated targets.
+# VIPER is the extension of msVIPER to single sample-based analysis. It effectively transforms a gene
+# expression matrix to a regulatory protein activity matrix. The simplest implementation of VIPER is based
+# on single-sample gene expression signatures obtained by scaling the probes or genes  subtracting the mean
+# and dividing by the standard deviation of each row
+# msVIPER是在估算master regular gene的enrichment根据这些target genes的activities。
+# 换言之，这个regulon network 提供的是什么？
+# regulon network，是在一种cell type中找出来的transcriptor factors以及与其强相关target genes.
+# 根据这些基因，我们在gene network里面用msVIPER来推算master regulator‘s activities
+# viper matrix就是算出来的normalized enrichment score matrix.
+# this matrix 是一种pseudo protein activities. 
+# 现在的问题是viper是怎么从regulon这个network来倒退这个normalized enrichment score的。
+# 这个部分我还没有理解清楚。
 
 
 
